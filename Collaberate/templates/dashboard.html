@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Collaberate{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ current_user.username }}!</h1>
+
+<section class="projects">
+    <h2>Your Projects</h2>
+    {% if user_projects %}
+        <ul>
+        {% for project in user_projects %}
+            <li>
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description }}</p>
+                <p>Status: {{ project.status }}</p>
+                <a href="{{ url_for('project_details', project_id=project.id) }}">View Details</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't created any projects yet. <a href="{{ url_for('create_project') }}">Create one now!</a></p>
+    {% endif %}
+</section>
+
+<section class="collaborations">
+    <h2>Your Collaborations</h2>
+    {% if collaborations %}
+        <ul>
+        {% for collab in collaborations %}
+            <li>
+                <h3>{{ collab.project.title }}</h3>
+                <p>Status: {{ collab.status }}</p>
+                <a href="{{ url_for('project_details', project_id=collab.project_id) }}">View Project</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You're not collaborating on any projects yet. <a href="{{ url_for('search') }}">Find collaborations!</a></p>
+    {% endif %}
+</section>
+
+<section class="recommended-projects">
+    <h2>Recommended Projects</h2>
+    {% if recommended_projects %}
+        <ul>
+        {% for project in recommended_projects %}
+            <li>
+                <h3>{{ project.title }}</h3>
+                <p>Created by: {{ project.creator.username }}</p>
+                <a href="{{ url_for('project_details', project_id=project.id) }}">View Details</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recommended projects at the moment.</p>
+    {% endif %}
+</section>
+
+<section class="learning">
+    <h2>Learning</h2>
+    <a href="{{ url_for('courses') }}" class="btn">View Courses</a>
+    <a href="{{ url_for('certifications') }}" class="btn">View Certifications</a>
+</section>
+
+<section class="resources">
+    <h2>Resources</h2>
+    <a href="{{ url_for('resources') }}" class="btn">View Resources</a>
+</section>
+
+<div class="actions">
+    <a href="{{ url_for('create_project') }}" class="btn">Create New Project</a>
+    <a href="{{ url_for('find_collaborators') }}" class="btn">Find Collaborators</a>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Create Project - Collaberate{% endblock %}
+
+{% block content %}
+<h1>Create a New Project</h1>
+<form method="POST" action="{{ url_for('create_project') }}">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label }}
+        {{ form.title() }}
+        {% for error in form.title.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.description.label }}
+        {{ form.description() }}
+        {% for error in form.description.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.skills_needed.label }}
+        {{ form.skills_needed() }}
+        {% for error in form.skills_needed.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+{% endblock %}

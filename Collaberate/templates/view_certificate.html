@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Certificate - {{ user_cert.certification.title }}{% endblock %}
+
+{% block content %}
+<div class="certificate">
+    <h1>Certificate of Completion</h1>
+    <h2>{{ user_cert.certification.title }}</h2>
+    <p>This is to certify that</p>
+    <h3>{{ current_user.username }}</h3>
+    <p>has successfully completed the requirements for this certification</p>
+    <p>Issued on: {{ user_cert.issued_at.strftime('%B %d, %Y') }}</p>
+    {% if user_cert.expires_at %}
+        <p>Valid until: {{ user_cert.expires_at.strftime('%B %d, %Y') }}</p>
+    {% endif %}
+    <p>Issued by: {{ user_cert.certification.issuer }}</p>
+</div>
+
+<div class="certificate-actions">
+    <button onclick="window.print()">Print Certificate</button>
+    <!-- Add more actions like download as PDF, share on social media, etc. -->
+</div>
+{% endblock %}

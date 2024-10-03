@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Resources - Collaberate{% endblock %}
+
+{% block content %}
+<h1>Resources</h1>
+
+<form method="POST" action="{{ url_for('resources') }}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label }}
+        {{ form.title() }}
+        {% for error in form.title.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.description.label }}
+        {{ form.description() }}
+        {% for error in form.description.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.resource_type.label }}
+        {{ form.resource_type() }}
+        {% for error in form.resource_type.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.file.label }}
+        {{ form.file() }}
+        {% for error in form.file.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    {{ form.submit() }}
+</form>
+
+<h2>Available Resources</h2>
+<div class="resources-list">
+    {% for resource in resources %}
+        <div class="resource-item">
+            <h3>{{ resource.title }}</h3>
+            <p>{{ resource.description[:100] }}{% if resource.description|length > 100 %}...{% endif %}</p>
+            <p>Type: {{ resource.resource_type }}</p>
+            <p>Created by: {{ resource.creator.username }}</p>
+            <a href="{{ url_for('resource_details', resource_id=resource.id) }}">View Details</a>
+            <a href="{{ url_for('download_resource', resource_id=resource.id) }}">Download</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

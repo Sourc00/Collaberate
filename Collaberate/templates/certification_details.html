@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ certification.title }} - Collaberate{% endblock %}
+
+{% block content %}
+<h1>{{ certification.title }}</h1>
+
+<div class="certification-details">
+    <p>{{ certification.description }}</p>
+    <p><strong>Issuer:</strong> {{ certification.issuer }}</p>
+    <p><strong>Created:</strong> {{ certification.created_at.strftime('%B %d, %Y') }}</p>
+</div>
+
+<div class="certification-actions">
+    {% if current_user.is_authenticated %}
+        {% if user_cert %}
+            <p>You earned this certification on {{ user_cert.issued_at.strftime('%B %d, %Y') }}</p>
+            {% if user_cert.expires_at %}
+                <p>Expires on: {{ user_cert.expires_at.strftime('%B %d, %Y') }}</p>
+            {% endif %}
+            <a href="{{ url_for('view_certificate', certification_id=certification.id) }}" class="btn">View Certificate</a>
+        {% else %}
+            <p>You haven't earned this certification yet.</p>
+            <!-- Add logic here for how users can earn the certification -->
+        {% endif %}
+    {% else %}
+        <a href="{{ url_for('login') }}" class="btn">Log in to earn this certification</a>
+    {% endif %}
+</div>
+
+<!-- Add more details about the certification, requirements, etc. -->
+
+{% endblock %}

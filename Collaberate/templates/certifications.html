@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Certifications - Collaberate{% endblock %}
+
+{% block content %}
+<h1>Available Certifications</h1>
+<div class="certifications-list">
+    {% for certification in certifications %}
+        <div class="certification-item">
+            <h2>{{ certification.title }}</h2>
+            <p>{{ certification.description[:100] }}...</p>
+            <p>Issuer: {{ certification.issuer }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
